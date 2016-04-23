@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>1212209_DAGK_10</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="js/angular.min.js"></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+	<div class="container">
+			<div class="row" style="background-color: #565656; color: #fff">
+			  <div class="col-md-12">Linkedin</div>
+			</div>
+			<!-- Content of linkedin -->
+			<div class="row" ng-repeat="x in myInfo" id="myProfile" >
+				<div class="col-md-2">
+					<img src="{{x.Image}}" alt="Image" class="images">
+				</div>
+				<div class="col-md-10">
+					<h3>{{x.HeadLine}}</h3>
+					<span><b>Full name:</b> {{x.Name}}</span><br>
+					<span><b>Carrer: </b>{{x.Carrer}}</span><br>
+					<span><b>Contact: </b>{{x.Contact}}</span><br>
+					<span><b>Country: </b>{{x.Country}}</span>
+				</div>
+			</div>
+
+			<div id="Summary" class="row" ng-repeat="s in summary">
+				<div class="col-md-12">
+					<h4>Summary</h4>
+					<p><pre>{{s.Content}}</pre></p>
+				</div>
+			</div>
+
+			<div id="Experience" class="row">
+				<h4>Experience</h4>
+				<div ng-repeat="e in experiences">
+						<div class="col-md-8">
+							<b><h5>{{e.Position}}</h5></b>
+							{{e.Company}}<br>
+							{{e.Time}}
+						</div>
+						<div class="col-md-4">
+						    <br>
+							<img src="{{e.Logo}}" alt="logo" style="width: 100px; height: 70px;">
+						</div>
+						<br><br><br><br><br>
+						<hr>
+					</div>
+			</div>
+
+			<div id="Project" class="row">
+				<h4>My Project</h4>
+				<div ng-repeat="p in projects" class="col-md-12">
+					<b>Project: {{p.Name}}<br></b>
+						Descrise: {{p.Descrise}}<br>
+						Position: {{p.Position}}<br>
+						Time: {{p.Time}}<br><br><br>
+				</div>
+			</div>
+
+			<div id="Skills" class="row">
+				<h4>My Skill</h4>
+				
+				<div class="col-md-12">
+					<ul  ng-repeat="s in skills" >
+						<li style="float: left; margin-left: 10px;">
+							<button class="btn btn-default" type="submit">{{s.Name}}</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="Education" class="row">
+				<h4>My Education</h4>
+				<div ng-repeat="e in education" class="col-md-12">
+					<b><h4>{{e.Name}}</h4></b>
+					Greaduate: {{e.Time}}<br>
+					GPA: {{e.GPA}}<br>
+					Major: {{e.Major}} <br><br>
+				</div>
+			</div>
+
+			<div class="row" style="background-color: #565656; color: #fff">
+			  <div class="col-md-12">Linkedin</div>
+			</div>
+	</div>
+
+
+
+	<script>
+		var app = angular.module('myApp', []);
+		app.controller('myController', function($scope, $http){
+			$http.get('Data/myinfo.json').then(function(response){
+				$scope.myInfo = response.data.myInfo;
+				$http.get("Data/summary.json").then(function(response1){
+					$scope.summary = response1.data.summary;
+				$http.get("Data/Experience.json").then(function(response2){
+						$scope.experiences = response2.data.MyExperience;
+				$http.get("Data/Project.json").then(function(response3){
+						$scope.projects = response3.data.MyProject;
+				$http.get("Data/Skills.json").then(function(response4){
+						$scope.skills = response4.data.skill;
+				$http.get("Data/Education.json").then(function(response5){
+						$scope.education = response5.data.Education;
+					        });
+					      });
+					   });
+					});
+				});
+			});
+		});
+	</script>
+</body>
+</html>
