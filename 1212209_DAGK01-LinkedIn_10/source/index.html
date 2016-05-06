@@ -22,63 +22,136 @@
 				</div>
 				<div class="col-md-10">
 					<h3>{{x.HeadLine}}</h3>
-					<span><b>Full name:</b> {{x.Name}}</span><br>
-					<span><b>Carrer: </b>{{x.Carrer}}</span><br>
-					<span><b>Contact: </b>{{x.Contact}}</span><br>
-					<span><b>Country: </b>{{x.Country}}</span>
+					<span ng-if="!edit"><b>Full name:</b> {{x.Name}}</span><br>
+					<div ng-if="edit"><b>Full name:</b><input  type="text" ng-model="x.Name" class="form-control"></div>
+					<span ng-if="!edit"><b>Carrer: </b>{{x.Carrer}}</span><br>
+					<div ng-if="edit"><b>Carrer:</b><input type="text" ng-model="x.Carrer" class="form-control"></div>
+					<span ng-if="!edit"><b>Contact: </b>{{x.Contact}}</span><br>
+					<div ng-if="edit"><b>Contact:</b><input type="text" ng-model="x.Contact" class="form-control"></div>
+					<span ng-if="!edit"><b>Country: </b>{{x.Country}}</span><br>
+					<div ng-if="edit"><b>Country:</b><input type="text" ng-model="x.Country" class="form-control"><br></div>
+					<button ng-click="editProfile()" class="btn btn-default" >Edit</button>
+					<button ng-click="SaveProfile()" class="btn btn-default" >Save</button>
 				</div>
 			</div>
 
 			<div id="Summary" class="row" ng-repeat="s in summary">
 				<div class="col-md-12">
 					<h4>Summary</h4>
-					<p><pre>{{s.Content}}</pre></p>
+					<div ng-if="!editS"><p><pre>{{s.Content}}</pre></p></div>
+					<div ng-if="editS"><textarea ng-model="s.Content" class="form-control" rows="4"></textarea><br></div>
+					<button ng-click="EditMySummary()" class="btn btn-default" >Edit</button>
+					<button ng-click="SaveMySummary()" class="btn btn-default" >Save</button>
 				</div>
 			</div>
 
 			<div id="Experience" class="row">
 				<h4>Experience</h4>
+				<div class="row">
 				<div ng-repeat="e in experiences">
-						<div class="col-md-8">
-							<b><h5>{{e.Position}}</h5></b>
-							{{e.Company}}<br>
-							{{e.Time}}
+						<div class="col-md-5">
+							<!-- {{e.Id}} -->
+							    <b>Position:</b> {{e.Position}}<br>
+								<b>Company:</b> {{e.Company}}<br>
+								<b>Time:</b> {{e.Time}}
 						</div>
-						<div class="col-md-4">
-						    <br>
-							<img src="{{e.Logo}}" alt="logo" style="width: 100px; height: 70px;">
+						<div class="col-md-4" style="padding-bottom: 25px;">
+							<img src="{{e.Logo}}" alt="logo" style="width: 100px; height: 70px;" >
 						</div>
-						<br><br><br><br><br>
-						<hr>
-					</div>
+						<div style="padding-bottom: 25px;" class="col-md-3">
+					   <button ng-click="EditMyExperiences(e.Id)" class="btn btn-default" >Edit</button>
+						</div>
+				</div>
 			</div>
+			<div class="row">
+				<button ng-click="CreateMyExperiences()" class="btn btn-default" >Add New Experience</button>
+				<hr>
+			</div>
+					<form class="form-group" ng-hide="hideFormExperiences">
+						<!-- <label>Id</label>
+						<input type="text" ng-model="Id" class="form-control" > -->
+						<label>Position</label>
+						<input type="text" ng-model="Position" class="form-control">
+						<label>Company</label>
+						<input type="text" ng-model="Company" class="form-control">
+						<label>Time</label>
+						<input type="text" ng-model="Time" class="form-control"><br>
+						<button ng-click="SaveMyExperiences()" class="btn btn-default" ng-if="Experience" >Save</button>
+						<button ng-click="AddMyExperiences()" class="btn btn-default" ng-if="!Experience">Create</button>
+					</form>
+			</div>
+
 
 			<div id="Project" class="row">
 				<h4>My Project</h4>
-				<div ng-repeat="p in projects" class="col-md-12">
-					<b>Project: {{p.Name}}<br></b>
+			<div class="row">
+				<div ng-repeat="p in projects" >
+					<div class="col-md-9">
+						<!-- {{p.Id}} -->
+						<b>Project: {{p.Name}}<br></b>
 						Descrise: {{p.Descrise}}<br>
 						Position: {{p.Position}}<br>
 						Time: {{p.Time}}<br><br><br>
+					</div>
+					<div style="padding-bottom: 25px;" class="col-md-3">
+						 <button ng-click="EditMyProjects(p.Id)" class="btn btn-default" >Edit</button>
+					</div>
 				</div>
+			</div>
+			<div class="row">
+				<button ng-click="CreateMyProject()" class="btn btn-default" >Add New Project</button>
+				<hr>
+			</div>
+					<form class="form-group" ng-hide="hideFormProject">
+						<!-- <label>Id</label>
+						<input type="text" ng-model="pId" class="form-control" > -->
+						<label>Position</label>
+						<input type="text" ng-model="pPosition" class="form-control">
+						<label>Name</label>
+						<input type="text" ng-model="pName" class="form-control">
+						<label>Time</label>
+						<input type="text" ng-model="pTime" class="form-control">
+						<label>Descrise</label>
+						<input type="text" ng-model="pDescrise" class="form-control"><br>
+						<button ng-click="SaveMyProjects()" class="btn btn-default" ng-if="Project" >Save</button>
+						<button ng-click="AddMyProject()" class="btn btn-default" ng-if="!Project">Create</button>
+					</form>
 			</div>
 
 			<div id="Skills" class="row"  style="padding-bottom: 10px;">
 				<h4>My Skill</h4>
 					<ul  ng-repeat="s in skills">
 						<li style="float: left; margin-left: 10px; display: inline-block; ">
-							<button class="btn btn-default" type="submit">{{s.Name}}</button>
+							<!-- <button class="btn btn-default" type="submit"> -->
+							{{s.Name}}
+							<!-- </button> -->
 						</li>
-					</ul>
+					</ul><br><br>
+					<div class="row">
+						<button ng-click="AddSkills()" class="btn btn-default" ng-if="!addK">Add</button>
+					</div>
+				<div class="row">
+				<div class="col-md-5" ng-if="Skill">
+					<h4>Skill</h4>
+					<input type="text" ng-model="sNameskill" class="form-control"><br>
+					<button ng-click="AddSkill(sNameskill)" class="btn btn-default">Add Skill</button>
+				</div>
+				</div>
 			</div>
 			<div id="Education" class="row">
 				<h4>My Education</h4>
 				<div ng-repeat="e in education" class="col-md-12">
-					<b><h4>{{e.Name}}</h4></b>
-					Greaduate: {{e.Time}}<br>
-					GPA: {{e.GPA}}<br>
-					Major: {{e.Major}} <br><br>
+					<span ng-if="!editE"><b><h4>{{e.Name}}</h4></b></span>
+					<div ng-if="editE"><b>Name</b><input  type="text" ng-model="e.Name" class="form-control"></div>
+					<span ng-if="!editE">Greaduate: {{e.Time}}<br></span>
+					<div ng-if="editE"><b>Greaduate</b><input  type="text" ng-model="e.Time" class="form-control"></div>
+					<span ng-if="!editE">GPA: {{e.GPA}}<br></span>
+					<div ng-if="editE"><b>GPA</b><input  type="text" ng-model="e.GPA" class="form-control"></div>
+					<span ng-if="!editE">Major: {{e.Major}} <br><br></span>
+					<div ng-if="editE"><b>Major</b><input  type="text" ng-model="e.Major" class="form-control"></div><br>
 				</div>
+					<button ng-click="editEducation()" class="btn btn-default" >Edit</button>
+					<button ng-click="SaveEducation()" class="btn btn-default" >Save</button>
 			</div>
 
 			<div class="row" style="background-color: #565656; color: #fff">
@@ -91,6 +164,9 @@
 	<script>
 		var app = angular.module('myApp', []);
 		app.controller('myController', function($scope, $http){
+			$scope.edit = false;
+			$scope.editS = false;
+			window.MY_SCOPE = $scope;
 			$http.get('Data/myinfo.json').then(function(response){
 				$scope.myInfo = response.data.myInfo;
 				$http.get("Data/summary.json").then(function(response1){
@@ -109,6 +185,140 @@
 					});
 				});
 			});
+
+			//handling edit skill
+			$scope.Skill = false;
+
+			$scope.AddSkills = function(){
+				$scope.Skill = true;
+			};
+
+			$scope.AddSkill = function(sNameskill){
+				$scope.skills.push({
+					"Name":sNameskill
+				});
+				$scope.Skill = false;
+			};
+
+			//handling edit education
+			$scope.editEducation = function(){
+				$scope.editE = true;
+			};
+
+			$scope.SaveEducation = function(){
+				$scope.editE = false;
+				$scope.education[0].Name = $scope.e.Name ;
+				$scope.education[0].Time = $scope.e.Time ;
+				$scope.education[0].GPA = $scope.e.GPA ;
+				$scope.education[0].Major = $scope.e.Major ;
+			};
+			//handling edit profile
+			$scope.editProfile = function(){
+				$scope.edit = true;
+			};
+
+			$scope.SaveProfile = function(){
+				$scope.edit = false;
+				$scope.myInfo[0].Name = $scope.x.Name ;
+				$scope.myInfo[0].Carrer = $scope.x.Carrer ;
+				$scope.myInfo[0].Contact = $scope.x.Contact ;
+				$scope.myInfo[0].Country = $scope.x.Country ;
+			};
+
+			//handling edit summary
+			$scope.EditMySummary = function(){
+				$scope.editS = true;
+			};
+
+			$scope.SaveMySummary = function(){
+				$scope.editS = false;
+				$scope.summary[0].Content = $scope.s.Content;
+			};
+
+			//handling edit, save and create experences
+			$scope.hideFormExperiences = true;
+
+			$scope.EditMyExperiences = function(Id){
+				$scope.hideFormExperiences = false;
+				$scope.Experience = true;
+				$scope.Position = $scope.experiences[Id-1].Position;
+				$scope.Company = $scope.experiences[Id-1].Company;
+				$scope.Time = $scope.experiences[Id-1].Time;
+				$scope.Id = Id-1;
+			};
+
+			$scope.SaveMyExperiences = function(){
+				$scope.hideFormExperiences = true;
+			 //    $scope.temp = {};
+				// $scope.temp = $scope.experiences[0];
+				$scope.experiences[$scope.Id].Position = $scope.Position;
+				$scope.experiences[$scope.Id].Company = $scope.Company;
+				$scope.experiences[$scope.Id].Time = $scope.Time;
+
+			};
+
+			$scope.CreateMyExperiences = function(){
+				$scope.hideFormExperiences = false;
+				$scope.Experience = false;
+				$scope.Position = "";
+				$scope.Company = "";
+				$scope.Time = "";
+				$scope.Id = "";
+			};
+
+			$scope.AddMyExperiences = function(){
+			    $scope.hideFormExperiences = true;
+				$scope.experiences.push({
+					Id: $scope.Id,
+					Position: $scope.Position,
+					Company: $scope.Company,
+					Time: $scope.Time
+				});
+			};
+
+			//handling edit, save and create project
+			$scope.hideFormProject = true;
+
+			$scope.EditMyProjects = function(pId){
+				$scope.hideFormProject = false;
+				$scope.Project = true;
+				$scope.pPosition = $scope.projects[pId-1].Position;
+				$scope.pName = $scope.projects[pId-1].Name;
+				$scope.pTime = $scope.projects[pId-1].Time;
+				$scope.pDescrise = $scope.projects[pId-1].Descrise;
+				$scope.pId = pId-1;
+			};
+
+			$scope.SaveMyProjects = function(){
+				$scope.hideFormProject = true;
+			 //    $scope.temp = {};
+				// $scope.temp = $scope.experiences[0];
+				$scope.projects[$scope.Id].Name = $scope.p.Name;
+				$scope.projects[$scope.Id].Position = $scope.p.Position;
+				$scope.projects[$scope.Id].Time = $scope.p.Time;
+				$scope.projects[$scope.Id].Descrise = $scope.p.Descrise;
+			};
+
+			$scope.CreateMyProject = function(){
+				$scope.hideFormProject = false;
+				$scope.Project = false;
+				$scope.pPosition = "";
+				$scope.pName ="";
+				$scope.pTime = "";
+				$scope.pDescrise = "";
+				$scope.pId = "";
+			};
+
+			$scope.AddMyProject = function(){
+			    $scope.hideFormProject = true;
+				$scope.projects.push({
+					Id: $scope.pId,
+					Position: $scope.pPosition,
+					Name: $scope.pName,
+					Time: $scope.pTime,
+					Descrise: $scope.pDescrise
+				});
+			};
 		});
 	</script>
 </body>
