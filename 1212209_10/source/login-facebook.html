@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+	<script type="text/javascript">
+		var ref = new Firebase("https://1212209linked.firebaseapp.com");
+		var authData = ref.getAuth();
+		if (authData) {
+		  console.log("User " + authData.uid + " is logged in with " + authData.provider);
+		} else {
+		  console.log("User is logged out");
+		}
+
+		$(function(){
+			$("#fblogin").click(function(){
+				authData.login('facebook',{
+					rememberMe:true,
+					scope:'email, user_likes'
+				});
+			});
+		})
+	</script>
+</head>
+<body>
+	<a href="#" id="fblogin">FB Login</a>
+</body>
+</html>
