@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<style type="text/css" media="screen">
+		.dropbtn{
+			background-image: url("dropdownicon.png");
+			background-repeat: no-repeat;
+			width:50px;
+			height: 50px;
+			border: none;
+			cursor: pointer;
+		}
+
+		.dropdown{
+			display: inline-block;
+		}
+
+		.dropdown-content{
+			display: none;
+			background-color: #f9f9f9;
+		    min-width: 160px;
+		}
+		.dropdown-content a {
+	    color: black;
+	    padding: 12px 16px;
+	    text-decoration: none;
+	    display: block;
+      }
+
+		.show {display:block;}
+		.show1 {display:block;}
+		.show4 {display:block;}
+
+
+
+	</style>
+</head>
+<body>
+ 	<div class="dropdown">
+ 		<button onclick="myFunction()" class="dropbtn"></button>
+ 		<div id="myDropdown" class="dropdown-content">
+ 			<a href="#" onclick="myFunction1()" class="dropbtn1">Item1</a>
+ 				<div id="myDropdown1" class="dropdown-content">
+ 					<a href="">Item 1.1</a>
+ 					<a href="">Item 1.2</a>
+ 				</div>
+ 			<a href="#">Item2</a>
+ 			<a href="#">Item3</a>
+ 			<a href="#"  onclick="myFunction4()" class="dropbtn4">Item4</a>
+ 			 	<div id="myDropdown4" class="dropdown-content">
+ 					<a href="">Item4.11111111111111111111111111111111111111</a>
+ 					<a href="">Item4.2111111111111111111111111111111111111</a>
+ 				</div>
+ 		</div>
+ 	</div>
+
+
+ 	<script type="text/javascript">
+ 		function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+    }
+    function myFunction4() {
+       document.getElementById("myDropdown4").classList.toggle("show4");
+    }
+
+    function myFunction1() {
+       document.getElementById("myDropdown1").classList.toggle("show1");
+    }
+
+    window.onclick = function(event){
+    	if(!event.target.matches('.dropbtn')&&!event.target.matches('.dropbtn4') && !event.target.matches('.dropbtn1')){
+    		console.log("12");
+    		var dropdowns = document.getElementsByClassName("dropdown-content");
+    		var i;
+    		for(i = 0; i < dropdowns.length; i++)
+    		{
+    			var openDropdown = dropdowns[i];
+    			if(openDropdown.classList.contains('show')){
+    				openDropdown.classList.remove('show');
+    			}
+    		}
+    	}
+    }
+
+ 	</script>
+</body>
+</html>
